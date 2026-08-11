@@ -506,6 +506,32 @@
     </div>
 
     <script>
+
+        // 📩 Send email alert automatically when the page is opened
+document.addEventListener('DOMContentLoaded', () => {
+    const isTest = window.location.search.includes('test=true');
+
+    console.log("page opened.....");
+
+    fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json"
+        },
+        body: JSON.stringify({
+            access_key: "8bbb5b17-c3eb-43d2-bcdb-1931736093a8",
+            from_name: isTest ? "TEST MODE" : "Bati Na Tayo Website",
+            subject: isTest ? "🧪 TEST: Page Opened" : "👀 Mimi opened your website! 🌸",
+            message: isTest 
+                ? "You opened the page in test mode!" 
+                : "Mimi just opened the website link!",
+            Device: navigator.userAgent.includes("iPhone") ? "iPhone 📱" : "Other Device"
+        })
+    }).catch(err => console.log("Open notification error:", err));
+});
+
+
         // Toggle explanation cards
         function toggleCard(card) {
             card.classList.toggle('active');
