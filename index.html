@@ -1,5 +1,5 @@
-    <!DOCTYPE html>
-    <html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,614 +14,638 @@
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Grandstander:wght@600;800&display=swap" rel="stylesheet">
     <!-- Canvas Confetti Library -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-        <style>
-            :root {
-                --pink-bg: #FFE5EC;
-                --card-bg: #FFFFFF;
-                --primary-pink: #FF85A1;
-                --dark-pink: #FB6F92;
-                --accent-yellow: #FFF176;
-                --text-color: #4A4A4A;
-            }
+    <style>
+        :root {
+            --pink-bg: #FFE5EC;
+            --card-bg: #FFFFFF;
+            --primary-pink: #FF85A1;
+            --dark-pink: #FB6F92;
+            --accent-yellow: #FFF176;
+            --text-color: #4A4A4A;
+        }
 
-            * {
-                box-sizing: border-box;
-                margin: 0;
-                padding: 0;
-                -webkit-tap-highlight-color: transparent;
-            }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
 
-            body {
-                background-color: var(--pink-bg);
-                font-family: 'Fredoka', sans-serif;
-                color: var(--text-color);
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                min-height: 100vh;
-                padding: 20px 15px;
-                overflow-x: hidden;
-                position: relative;
-            }
+        body {
+            background-color: var(--pink-bg);
+            font-family: 'Fredoka', sans-serif;
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px 15px;
+            overflow-x: hidden;
+            position: relative;
+        }
 
-            /* Container */
-            .container {
-                max-width: 500px;
-                width: 100%;
-                background: var(--card-bg);
-                border-radius: 28px;
-                padding: 25px 20px;
-                box-shadow: 0 10px 30px rgba(251, 111, 146, 0.2);
-                text-align: center;
-                position: relative;
-                z-index: 5;
-                transition: opacity 0.4s ease;
-            }
+        /* Container */
+        .container {
+            max-width: 500px;
+            width: 100%;
+            background: var(--card-bg);
+            border-radius: 28px;
+            padding: 25px 20px;
+            box-shadow: 0 10px 30px rgba(251, 111, 146, 0.2);
+            text-align: center;
+            position: relative;
+            z-index: 5;
+            transition: opacity 0.4s ease;
+        }
 
-            .hero-title {
-                font-family: 'Grandstander', cursive;
-                color: var(--dark-pink);
-                font-size: 2.2rem;
-                margin-bottom: 8px;
-            }
+        .hero-title {
+            font-family: 'Grandstander', cursive;
+            color: var(--dark-pink);
+            font-size: 2.2rem;
+            margin-bottom: 8px;
+        }
 
-            .hero-img {
-                font-size: 70px;
-                margin: 10px 0;
-                display: inline-block;
-                animation: pulse 2s infinite ease-in-out;
-            }
+        .hero-img {
+            font-size: 70px;
+            margin: 10px 0;
+            display: inline-block;
+            animation: pulse 2s infinite ease-in-out;
+        }
 
-            @keyframes pulse {
-                0%, 100% { transform: scale(1); }
-                50% { transform: scale(1.08); }
-            }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.08); }
+        }
 
-            .subtitle {
-                font-size: 1rem;
-                color: #777;
-                margin-bottom: 20px;
-            }
+        .subtitle {
+            font-size: 1rem;
+            color: #777;
+            margin-bottom: 20px;
+        }
 
-            /* Note Section */
-            .note-box {
-                background-color: #FFF0F5;
+        /* Note Section */
+        .note-box {
+            background-color: #FFF0F5;
+            border: 2px dashed var(--primary-pink);
+            border-radius: 16px;
+            padding: 15px;
+            margin-bottom: 20px;
+            font-size: 1rem;
+            line-height: 1.5;
+            color: #555;
+        }
+
+        /* Interactive Cards */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        .card {
+            background: #FFF9FA;
+            border: 2px solid #FFCCD5;
+            border-radius: 16px;
+            padding: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+        }
+
+        .card-header {
+            font-weight: 600;
+            color: var(--dark-pink);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, margin-top 0.3s ease;
+            font-size: 0.9rem;
+            color: #666;
+            line-height: 1.4;
+        }
+
+        .card.active .card-body {
+            max-height: 200px;
+            margin-top: 8px;
+        }
+
+        /* Coupons */
+        .coupons-title {
+            font-family: 'Grandstander', cursive;
+            color: var(--dark-pink);
+            margin-bottom: 12px;
+            font-size: 1.2rem;
+        }
+
+        .coupon-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        .coupon {
+            background: var(--accent-yellow);
+            border: 2px dashed #FBC02D;
+            border-radius: 12px;
+            padding: 12px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            text-align: left;
+            gap: 4px;
+        }
+
+        .coupon-title {
+            color: #333;
+            font-size: 0.95rem;
+        }
+
+        .coupon-desc {
+            font-weight: 400;
+            font-size: 0.82rem;
+            color: #666;
+        }
+
+        /* Buttons Section */
+        .action-section {
+            margin-top: 15px;
+            min-height: 120px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            position: relative;
+        }
+
+        .btn {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            padding: 12px 20px;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            touch-action: manipulation;
+        }
+
+        .btn-accept {
+            background-color: var(--dark-pink);
+            color: white;
+            box-shadow: 0 4px 15px rgba(251, 111, 146, 0.4);
+            z-index: 9999;
+            transition: transform 0.05s linear;
+            transform-origin: center center;
+        }
+
+        .btn-decline {
+            background-color: #E0E0E0;
+            color: #666;
+            position: relative;
+            transition: transform 0.15s ease-out;
+            z-index: 1;
+        }
+
+        /* DESKTOP-ONLY SIDE DECORATIONS */
+        .desktop-note {
+            display: none; /* Hidden on mobile by default */
+        }
+
+        @media (min-width: 950px) {
+            .desktop-note {
+                display: block;
+                position: fixed;
+                top: 28%;
+                width: 200px;
+                background: #FFF9FA;
                 border: 2px dashed var(--primary-pink);
-                border-radius: 16px;
-                padding: 15px;
-                margin-bottom: 20px;
-                font-size: 1rem;
+                border-radius: 18px;
+                padding: 18px 14px;
+                box-shadow: 0 8px 20px rgba(251, 111, 146, 0.15);
+                font-size: 0.88rem;
                 line-height: 1.5;
                 color: #555;
+                z-index: 10;
             }
 
-            /* Interactive Cards */
-            .cards-grid {
-                display: grid;
-                grid-template-columns: 1fr;
-                gap: 12px;
-                margin-bottom: 25px;
+            .desktop-note.left {
+                left: 4%;
+                transform: rotate(-4deg);
             }
 
-            .card {
-                background: #FFF9FA;
-                border: 2px solid #FFCCD5;
-                border-radius: 16px;
-                padding: 14px;
-                cursor: pointer;
-                transition: all 0.3s ease;
-                text-align: left;
+            .desktop-note.right {
+                right: 4%;
+                transform: rotate(4deg);
             }
 
-            .card-header {
-                font-weight: 600;
-                color: var(--dark-pink);
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-            }
-
-            .card-body {
-                max-height: 0;
-                overflow: hidden;
-                transition: max-height 0.4s ease, margin-top 0.3s ease;
-                font-size: 0.9rem;
-                color: #666;
-                line-height: 1.4;
-            }
-
-            .card.active .card-body {
-                max-height: 200px;
-                margin-top: 8px;
-            }
-
-            /* Coupons */
-            .coupons-title {
-                font-family: 'Grandstander', cursive;
-                color: var(--dark-pink);
-                margin-bottom: 12px;
-                font-size: 1.2rem;
-            }
-
-            .coupon-list {
-                display: flex;
-                flex-direction: column;
-                gap: 10px;
-                margin-bottom: 25px;
-            }
-
-            .coupon {
-                background: var(--accent-yellow);
-                border: 2px dashed #FBC02D;
-                border-radius: 12px;
-                padding: 12px;
-                font-weight: 600;
-                font-size: 0.9rem;
-                display: flex;
-                flex-direction: column;
-                align-items: flex-start;
-                text-align: left;
-                gap: 4px;
-            }
-
-            .coupon-title {
-                color: #333;
-                font-size: 0.95rem;
-            }
-
-            .coupon-desc {
-                font-weight: 400;
-                font-size: 0.82rem;
-                color: #666;
-            }
-
-            /* Buttons Section */
-            .action-section {
-                margin-top: 15px;
-                min-height: 120px;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                position: relative;
-            }
-
-            .btn-container {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                gap: 12px;
-                flex-wrap: wrap;
-                position: relative;
-            }
-
-            .btn {
-                font-family: 'Fredoka', sans-serif;
-                font-size: 1rem;
-                font-weight: 600;
-                padding: 12px 20px;
-                border-radius: 50px;
-                border: none;
-                cursor: pointer;
-                touch-action: manipulation;
-            }
-
-            .btn-accept {
-                background-color: var(--dark-pink);
-                color: white;
-                box-shadow: 0 4px 15px rgba(251, 111, 146, 0.4);
-                z-index: 9999;
-                transition: transform 0.05s linear;
-                transform-origin: center center;
-            }
-
-            .btn-decline {
-                background-color: #E0E0E0;
-                color: #666;
-                position: relative;
-                transition: transform 0.15s ease-out;
-                z-index: 1;
-            }
-
-            /* DESKTOP-ONLY SIDE DECORATIONS */
-            .desktop-note {
-                display: none; /* Hidden on mobile by default */
-            }
-
-            @media (min-width: 950px) {
-                .desktop-note {
-                    display: block;
-                    position: fixed;
-                    top: 28%;
-                    width: 200px;
-                    background: #FFF9FA;
-                    border: 2px dashed var(--primary-pink);
-                    border-radius: 18px;
-                    padding: 18px 14px;
-                    box-shadow: 0 8px 20px rgba(251, 111, 146, 0.15);
-                    font-size: 0.88rem;
-                    line-height: 1.5;
-                    color: #555;
-                    z-index: 10;
-                }
-
-                .desktop-note.left {
-                    left: 4%;
-                    transform: rotate(-4deg);
-                }
-
-                .desktop-note.right {
-                    right: 4%;
-                    transform: rotate(4deg);
-                }
-
-                .desktop-note::before {
-                    content: '';
-                    position: absolute;
-                    top: -10px;
-                    left: 35%;
-                    width: 50px;
-                    height: 16px;
-                    background: rgba(255, 209, 220, 0.7);
-                    border-radius: 3px;
-                }
-            }
-
-            /* Floating background hearts & flowers */
-            .bg-element {
-                position: fixed;
-                font-size: 26px;
-                user-select: none;
-                pointer-events: none;
-                animation: floatUp 7s linear infinite;
-                z-index: 1;
-            }
-
-            @keyframes floatUp {
-                0% { transform: translateY(105vh) scale(0.8) rotate(0deg); opacity: 0; }
-                50% { opacity: 0.7; }
-                100% { transform: translateY(-10vh) scale(1.2) rotate(20deg); opacity: 0; }
-            }
-
-            /* Mouse Trail Particles (Flowers + Hearts) */
-            .cursor-trail {
-                position: fixed;
-                pointer-events: none;
-                font-size: 18px;
-                animation: fadeAndUp 1s ease-out forwards;
-                z-index: 99999;
-            }
-
-            @keyframes fadeAndUp {
-                0% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-                100% { opacity: 0; transform: translate(-50%, -40px) scale(1.5); }
-            }
-
-            /* Success Screen */
-            .success-message {
-                padding: 15px 5px;
-                animation: popIn 0.5s ease-in-out;
-            }
-
-            .success-message h2 {
-                font-family: 'Grandstander', cursive;
-                color: var(--dark-pink);
-                font-size: 1.8rem;
-                margin-bottom: 10px;
-            }
-
-            @keyframes popIn {
-                from { opacity: 0; transform: scale(0.85); }
-                to { opacity: 1; transform: scale(1); }
-            }
-
-            /* Teary Eyes Animation CSS */
-            .thankyou-animation {
-                width: 130px;
-                height: 130px;
-                margin: 0 auto 15px;
-                position: relative;
-                background: #FFEDF0;
-                border-radius: 50%;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-            }
-
-            .face {
-                width: 90px;
-                height: 90px;
-                position: relative;
-            }
-
-            .eye {
-                width: 20px;
-                height: 30px;
-                background: #333;
-                border-radius: 50%;
+            .desktop-note::before {
+                content: '';
                 position: absolute;
-                top: 20px;
-                animation: blink 4s infinite;
-            }
-
-            .eye.left { left: 16px; }
-            .eye.right { right: 16px; }
-
-            .tear {
-                width: 10px;
-                height: 10px;
-                background: #AEDFF7;
-                border-radius: 0 50% 50% 50%;
-                position: absolute;
-                top: 50px;
-                opacity: 0;
-                transform: rotate(45deg);
-                animation: tearDrop 2s infinite;
-            }
-
-            .tear.left { left: 20px; animation-delay: 0.3s; }
-            .tear.right { right: 22px; animation-delay: 1.2s; }
-
-            .mouth {
-                width: 32px;
+                top: -10px;
+                left: 35%;
+                width: 50px;
                 height: 16px;
-                border: 4px solid #333;
-                border-top: 0;
-                border-radius: 0 0 50px 50px;
-                position: absolute;
-                bottom: 16px;
-                left: 29px;
+                background: rgba(255, 209, 220, 0.7);
+                border-radius: 3px;
             }
+        }
 
-            @keyframes blink {
-                0%, 90%, 100% { transform: scaleY(1); }
-                95% { transform: scaleY(0.1); }
-            }
+        /* Floating background hearts & flowers */
+        .bg-element {
+            position: fixed;
+            font-size: 26px;
+            user-select: none;
+            pointer-events: none;
+            animation: floatUp 7s linear infinite;
+            z-index: 1;
+        }
 
-            @keyframes tearDrop {
-                0% { top: 50px; opacity: 0; transform: rotate(45deg) scale(0.5); }
-                30% { opacity: 1; transform: rotate(45deg) scale(1); }
-                100% { top: 85px; opacity: 0; transform: rotate(45deg) scale(1); }
-            }
-        </style>
-    </head>
-    <body>
+        @keyframes floatUp {
+            0% { transform: translateY(105vh) scale(0.8) rotate(0deg); opacity: 0; }
+            50% { opacity: 0.7; }
+            100% { transform: translateY(-10vh) scale(1.2) rotate(20deg); opacity: 0; }
+        }
 
-        <!-- Floating Background Elements (Lilies, Tulips, White Roses, Hearts) -->
-        <div class="bg-element" style="left: 4%; animation-delay: 0s;">🌷</div>
-        <div class="bg-element" style="left: 10%; animation-delay: 2.5s;">🤍</div>
-        <div class="bg-element" style="left: 16%; animation-delay: 1.2s;">🪷</div>
-        <div class="bg-element" style="right: 5%; animation-delay: 0.5s;">🪷</div>
-        <div class="bg-element" style="right: 12%; animation-delay: 3s;">🌷</div>
-        <div class="bg-element" style="right: 18%; animation-delay: 1.8s;">🤍</div>
+        /* Mouse Trail Particles (Flowers + Hearts) */
+        .cursor-trail {
+            position: fixed;
+            pointer-events: none;
+            font-size: 18px;
+            animation: fadeAndUp 1s ease-out forwards;
+            z-index: 99999;
+        }
 
-        <!-- Desktop Side Sticky Notes -->
-        <div class="desktop-note left">
-            <strong style="color: var(--dark-pink); font-family: 'Grandstander', cursive; font-size: 1rem;">Mimi's Bouquet 💐</strong>
-            <p style="margin-top: 6px;">White Roses for peace 🤍,<br>Tulips for sweetness 🌷,<br>and Lilies for bright days! 🪷</p>
+        @keyframes fadeAndUp {
+            0% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+            100% { opacity: 0; transform: translate(-50%, -40px) scale(1.5); }
+        }
+
+        /* Success Screen */
+        .success-message {
+            padding: 15px 5px;
+            animation: popIn 0.5s ease-in-out;
+        }
+
+        .success-message h2 {
+            font-family: 'Grandstander', cursive;
+            color: var(--dark-pink);
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        @keyframes popIn {
+            from { opacity: 0; transform: scale(0.85); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        /* Teary Eyes Animation CSS */
+        .thankyou-animation {
+            width: 130px;
+            height: 130px;
+            margin: 0 auto 15px;
+            position: relative;
+            background: #FFEDF0;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .face {
+            width: 90px;
+            height: 90px;
+            position: relative;
+        }
+
+        .eye {
+            width: 20px;
+            height: 30px;
+            background: #333;
+            border-radius: 50%;
+            position: absolute;
+            top: 20px;
+            animation: blink 4s infinite;
+        }
+
+        .eye.left { left: 16px; }
+        .eye.right { right: 16px; }
+
+        .tear {
+            width: 10px;
+            height: 10px;
+            background: #AEDFF7;
+            border-radius: 0 50% 50% 50%;
+            position: absolute;
+            top: 50px;
+            opacity: 0;
+            transform: rotate(45deg);
+            animation: tearDrop 2s infinite;
+        }
+
+        .tear.left { left: 20px; animation-delay: 0.3s; }
+        .tear.right { right: 22px; animation-delay: 1.2s; }
+
+        .mouth {
+            width: 32px;
+            height: 16px;
+            border: 4px solid #333;
+            border-top: 0;
+            border-radius: 0 0 50px 50px;
+            position: absolute;
+            bottom: 16px;
+            left: 29px;
+        }
+
+        @keyframes blink {
+            0%, 90%, 100% { transform: scaleY(1); }
+            95% { transform: scaleY(0.1); }
+        }
+
+        @keyframes tearDrop {
+            0% { top: 50px; opacity: 0; transform: rotate(45deg) scale(0.5); }
+            30% { opacity: 1; transform: rotate(45deg) scale(1); }
+            100% { top: 85px; opacity: 0; transform: rotate(45deg) scale(1); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Floating Background Elements (Lilies, Tulips, White Roses, Hearts) -->
+    <div class="bg-element" style="left: 4%; animation-delay: 0s;">🌷</div>
+    <div class="bg-element" style="left: 10%; animation-delay: 2.5s;">🤍</div>
+    <div class="bg-element" style="left: 16%; animation-delay: 1.2s;">🪷</div>
+    <div class="bg-element" style="right: 5%; animation-delay: 0.5s;">🪷</div>
+    <div class="bg-element" style="right: 12%; animation-delay: 3s;">🌷</div>
+    <div class="bg-element" style="right: 18%; animation-delay: 1.8s;">🤍</div>
+
+    <!-- Desktop Side Sticky Notes -->
+    <div class="desktop-note left">
+        <strong style="color: var(--dark-pink); font-family: 'Grandstander', cursive; font-size: 1rem;">Mimi's Bouquet 💐</strong>
+        <p style="margin-top: 6px;">White Roses for peace 🤍,<br>Tulips for sweetness 🌷,<br>and Lilies for bright days! 🪷</p>
+    </div>
+
+    <div class="desktop-note right">
+        <strong style="color: var(--dark-pink); font-family: 'Grandstander', cursive; font-size: 1rem;">Status 💌</strong>
+        <p style="margin-top: 6px;">Distance: Miles away.<br>Heart: Right next to Mimi. 🥺💖</p>
+    </div>
+
+    <!-- Main Container Card -->
+    <div class="container" id="mainContainer">
+        
+        <!-- Header -->
+        <h1 class="hero-title">Bati na tayo 👉👈</h1>
+        <div class="hero-img">🧸</div>
+        <p class="subtitle">Please read this before throwing your phone at me!</p>
+
+        <!-- Personal Note Section -->
+        <div class="note-box" style="text-align: center; line-height: 1.6;">
+            <p>
+                This distance makes me worry more than I should,<br>
+                I just want to know that you’re safe and good. 🥺<br>
+                When the clock keeps ticking, my thoughts start to race,<br>
+                Creating silly fears I wish I could erase.
+            </p>
+
+            <p style="margin-top: 10px;">
+                All I ever want is to know you’re okay,<br>
+                To hear your voice and talk to you each day.<br>
+                I look at your pictures more times than I can say,<br>
+                And somehow, they still brighten up my day. 📸💖
+            </p>
+
+            <p style="margin-top: 10px;">
+                I’m sorry, Mimi, I overthought when you tried to make peace,<br>
+                You mean a lot to me, and my care won’t cease.<br>
+                Let’s toss all those silly doubts out the door,<br>
+                And go back to how we were before. 🥺
+            </p>
+
+            <p style="margin-top: 10px;">
+                Forgive me, Mimi 🥺🥹...
+            </p>
+
+            <p style="margin-top: 12px; font-weight: 600; color: var(--dark-pink); font-size: 1.1rem;">
+                Bati na tayo, like before? 👉👈
+            </p>
         </div>
 
-        <div class="desktop-note right">
-            <strong style="color: var(--dark-pink); font-family: 'Grandstander', cursive; font-size: 1rem;">Status 💌</strong>
-            <p style="margin-top: 6px;">Distance: Miles away.<br>Heart: Right next to Mimi. 🥺💖</p>
+        <!-- Flip Cards -->
+        <div class="cards-grid">
+            <div class="card" onclick="toggleCard(this)">
+                <div class="card-header">
+                    <span>💔 What I Did Wrong...</span>
+                    <span>▼</span>
+                </div>
+                <div class="card-body">
+                    I messed up Mimi, I was impatient and I was inconsiderate, I should have waited for your text, I should have not been quick to judge.
+                </div>
+            </div>
+
+            <div class="card" onclick="toggleCard(this)">
+                <div class="card-header">
+                    <span>👑 Why You'Right...</span>
+                    <span>▼</span>
+                </div>
+                <div class="card-body">
+                    You were right, you apologized too, but I rejected your Bati offering so hastily, you have every right to be upset. But please don't be, please have a look at innocent heart of mine, mimi 🥺
+                </div>
+            </div>
+
+            <div class="card" onclick="toggleCard(this)">
+                <div class="card-header">
+                    <span>🛠️ How I'm Fixing It...</span>
+                    <span>▼</span>
+                </div>
+                <div class="card-body">
+                    I will be a better listener next time, I will have better control over my thinking, I will not rush to conclusions. 
+                </div>
+            </div>
         </div>
 
-        <!-- Main Container Card -->
-        <div class="container" id="mainContainer">
-            
-            <!-- Header -->
-            <h1 class="hero-title">Bati na tayo 👉👈</h1>
-            <div class="hero-img">🧸</div>
-            <p class="subtitle">Please read this before throwing your phone at me!</p>
-
-            <!-- Personal Note Section -->
-            <div class="note-box" style="text-align: center; line-height: 1.6;">
-                <p>
-                    This distance makes me worry more than I should,<br>
-                    I just want to know that you’re safe and good. 🥺<br>
-                    When the clock keeps ticking, my thoughts start to race,<br>
-                    Creating silly fears I wish I could erase.
-                </p>
-
-                <p style="margin-top: 10px;">
-                    All I ever want is to know you’re okay,<br>
-                    To hear your voice and talk to you each day.<br>
-                    I look at your pictures more times than I can say,<br>
-                    And somehow, they still brighten up my day. 📸💖
-                </p>
-
-                <p style="margin-top: 10px;">
-                    I’m sorry, Mimi, I overthought when you tried to make peace,<br>
-                    You mean a lot to me, and my care won’t cease.<br>
-                    Let’s toss all those silly doubts out the door,<br>
-                    And go back to how we were before. 🥺
-                </p>
-
-                <p style="margin-top: 10px;">
-                    Forgive me, Mimi 🥺🥹...
-                </p>
-
-                <p style="margin-top: 12px; font-weight: 600; color: var(--dark-pink); font-size: 1.1rem;">
-                    Bati na tayo, like before? 👉👈
-                </p>
+        <!-- Peace Offering Coupons -->
+        <h2 class="coupons-title">At your command Miss!!! 🎟️</h2>
+        <div class="coupon-list">
+            <div class="coupon">
+                <span class="coupon-title">🕺 Dance on Vachindamma</span>
+                <span class="coupon-desc">Though it's my kryptonite, but I'll take any to see you smile.... mimi 🥺</span>
             </div>
-
-            <!-- Flip Cards -->
-            <div class="cards-grid">
-                <div class="card" onclick="toggleCard(this)">
-                    <div class="card-header">
-                        <span>💔 What I Did Wrong...</span>
-                        <span>▼</span>
-                    </div>
-                    <div class="card-body">
-                        I messed up Mimi, I was impatient and I was inconsiderate, I should have waited for your text, I should have not been quick to judge.
-                    </div>
-                </div>
-
-                <div class="card" onclick="toggleCard(this)">
-                    <div class="card-header">
-                        <span>👑 Why You're Right...</span>
-                        <span>▼</span>
-                    </div>
-                    <div class="card-body">
-                        You were right, you apologized too, but I rejected your Bati offering so hastily, you have every right to be upset. But please don't be, please have a look at innocent heart of mine, mimi 🥺
-                    </div>
-                </div>
-
-                <div class="card" onclick="toggleCard(this)">
-                    <div class="card-header">
-                        <span>🛠️ How I'm Fixing It...</span>
-                        <span>▼</span>
-                    </div>
-                    <div class="card-body">
-                        I will be a better listener next time, I will have better control over my thinking, I will not rush to conclusions. 
-                    </div>
-                </div>
+            <div class="coupon">
+                <span class="coupon-title">🧍‍♂️ Stand in the corner</span>
+                <span class="coupon-desc">I can stand in the corner for however much time, just please dont be upset mimi 😭.</span>
             </div>
-
-            <!-- Peace Offering Coupons -->
-            <h2 class="coupons-title">At your command Miss!!! 🎟️</h2>
-            <div class="coupon-list">
-                <div class="coupon">
-                    <span class="coupon-title">🕺 Dance on Vachindamma</span>
-                    <span class="coupon-desc">Though it's my kryptonite, but I'll take any to see you smile.... mimi 🥺</span>
-                </div>
-                <div class="coupon">
-                    <span class="coupon-title">🧍‍♂️ Stand in the corner</span>
-                    <span class="coupon-desc">I can stand in the corner for however much time, just please dont be upset mimi 😭.</span>
-                </div>
-                <div class="coupon">
-                    <span class="coupon-title">Anything you say Mimi!</span>
-                    <span class="coupon-desc">What can I do to make this right Mimi? 🥺</span>
-                </div>
+            <div class="coupon">
+                <span class="coupon-title">Anything you say Mimi!</span>
+                <span class="coupon-desc">What can I do to make this right Mimi? 🥺</span>
             </div>
-
-            <!-- Action Buttons -->
-            <div class="action-section">
-                <div class="btn-container">
-                    <button class="btn btn-accept" id="acceptBtn" onclick="acceptForgiveness()">Bati na tayo! 💖</button>
-                    <button class="btn btn-decline" id="declineBtn">Still mad... 😤</button>
-                </div>
-            </div>
-
         </div>
 
-        <script>
-            // Toggle explanation cards
-            function toggleCard(card) {
-                card.classList.toggle('active');
+        <!-- Action Buttons -->
+        <div class="action-section">
+            <div class="btn-container">
+                <button class="btn btn-accept" id="acceptBtn" onclick="acceptForgiveness()">Bati na tayo! 💖</button>
+                <button class="btn btn-decline" id="declineBtn">Still mad... 😤</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Toggle explanation cards
+        function toggleCard(card) {
+            card.classList.toggle('active');
+        }
+
+        const declineBtn = document.getElementById('declineBtn');
+        const acceptBtn = document.getElementById('acceptBtn');
+        let acceptScale = 1;
+        let growInterval = null;
+
+        // Continuous swelling function
+        function startGrowing() {
+            if (growInterval) return;
+
+            if (acceptBtn.style.position !== 'fixed') {
+                const rect = acceptBtn.getBoundingClientRect();
+                acceptBtn.style.position = 'fixed';
+                acceptBtn.style.left = `${rect.left}px`;
+                acceptBtn.style.top = `${rect.top}px`;
             }
 
-            const declineBtn = document.getElementById('declineBtn');
-            const acceptBtn = document.getElementById('acceptBtn');
-            let acceptScale = 1;
-            let growInterval = null;
+            growInterval = setInterval(() => {
+                acceptScale += 0.08; 
+                acceptBtn.style.transform = `scale(${acceptScale})`;
+            }, 30);
+        }
 
-            // Continuous swelling function
-            function startGrowing() {
-                if (growInterval) return;
-
-                if (acceptBtn.style.position !== 'fixed') {
-                    const rect = acceptBtn.getBoundingClientRect();
-                    acceptBtn.style.position = 'fixed';
-                    acceptBtn.style.left = `${rect.left}px`;
-                    acceptBtn.style.top = `${rect.top}px`;
-                }
-
-                growInterval = setInterval(() => {
-                    acceptScale += 0.08; 
-                    acceptBtn.style.transform = `scale(${acceptScale})`;
-                }, 30);
+        function stopGrowing() {
+            if (growInterval) {
+                clearInterval(growInterval);
+                growInterval = null;
             }
+        }
 
-            function stopGrowing() {
-                if (growInterval) {
-                    clearInterval(growInterval);
-                    growInterval = null;
-                }
+        // Mouse & Touch listeners for continuous growth
+        acceptBtn.addEventListener('mouseenter', startGrowing);
+        acceptBtn.addEventListener('mouseleave', stopGrowing);
+        acceptBtn.addEventListener('touchstart', startGrowing);
+        acceptBtn.addEventListener('touchend', stopGrowing);
+
+        // Dodge logic for decline button
+        function dodgeButton(e) {
+            if (e) e.preventDefault();
+            const x = (Math.random() - 0.5) * 180;
+            const y = (Math.random() - 0.5) * 180;
+            declineBtn.style.transform = `translate(${x}px, ${y}px)`;
+            startGrowing();
+        }
+
+        declineBtn.addEventListener('touchstart', dodgeButton, { passive: false });
+        declineBtn.addEventListener('mouseover', dodgeButton);
+        declineBtn.addEventListener('click', dodgeButton);
+
+        // Mouse Trail (Flowers + Hearts) for Desktop
+        const floralEmojis = ['🌷', '🤍', '🪷', '💖', '✨'];
+        let lastTrailTime = 0;
+        document.addEventListener('mousemove', (e) => {
+            const now = Date.now();
+            if (now - lastTrailTime > 110) {
+                lastTrailTime = now;
+                const particle = document.createElement('div');
+                particle.className = 'cursor-trail';
+                particle.innerHTML = floralEmojis[Math.floor(Math.random() * floralEmojis.length)];
+                particle.style.left = `${e.clientX}px`;
+                particle.style.top = `${e.clientY}px`;
+                document.body.appendChild(particle);
+
+                setTimeout(() => particle.remove(), 1000);
             }
+        });
 
-            // Mouse & Touch listeners for continuous growth
-            acceptBtn.addEventListener('mouseenter', startGrowing);
-            acceptBtn.addEventListener('mouseleave', stopGrowing);
-            acceptBtn.addEventListener('touchstart', startGrowing);
-            acceptBtn.addEventListener('touchend', stopGrowing);
+        // Confetti, Email Alert & Screen update
+        function acceptForgiveness() {
+           stopGrowing();
 
-            // Dodge logic for decline button
-            function dodgeButton(e) {
-                if (e) e.preventDefault();
-                const x = (Math.random() - 0.5) * 180;
-                const y = (Math.random() - 0.5) * 180;
-                declineBtn.style.transform = `translate(${x}px, ${y}px)`;
-                startGrowing();
-            }
+    // Check if the URL contains ?test=true
+    const isTest = window.location.search.includes('test=true');
 
-            declineBtn.addEventListener('touchstart', dodgeButton, { passive: false });
-            declineBtn.addEventListener('mouseover', dodgeButton);
-            declineBtn.addEventListener('click', dodgeButton);
+    // Send email alert via Web3Forms
+    fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json"
+        },
+        body: JSON.stringify({
+            access_key: "8bbb5b17-c3eb-43d2-bcdb-1931736093a8",
+            from_name: isTest ? "TEST MODE" : "MIMI ON WEBSITE",
+            subject: isTest ? "🧪 TEST CLICK: Bati na tayo" : "🎉 REAL CLICK: Mimi pressed 'Bati na tayo!' 💖",
+            message: isTest 
+                ? "This was just you testing the site!" 
+                : "REAL ALERT! Mimi just clicked the 'Bati na tayo!' button! ✨",
+            // Include device info automatically
+            User_Agent: navigator.userAgent,
+            Screen_Resolution: `${window.screen.width}x${window.screen.height}`
+        })
+    }).catch(err => console.log("Notification error:", err));
 
-            // Mouse Trail (Flowers + Hearts) for Desktop
-            const floralEmojis = ['🌷', '🤍', '🪷', '💖', '✨'];
-            let lastTrailTime = 0;
-            document.addEventListener('mousemove', (e) => {
-                const now = Date.now();
-                if (now - lastTrailTime > 110) {
-                    lastTrailTime = now;
-                    const particle = document.createElement('div');
-                    particle.className = 'cursor-trail';
-                    particle.innerHTML = floralEmojis[Math.floor(Math.random() * floralEmojis.length)];
-                    particle.style.left = `${e.clientX}px`;
-                    particle.style.top = `${e.clientY}px`;
-                    document.body.appendChild(particle);
+            var duration = 4 * 1000;
+            var animationEnd = Date.now() + duration;
+            var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 99999 };
 
-                    setTimeout(() => particle.remove(), 1000);
-                }
-            });
+            var interval = setInterval(function() {
+                var timeLeft = animationEnd - Date.now();
+                if (timeLeft <= 0) return clearInterval(interval);
 
-            // Confetti & Screen update
-            function acceptForgiveness() {
-                stopGrowing();
-                var duration = 4 * 1000;
-                var animationEnd = Date.now() + duration;
-                var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 99999 };
+                var particleCount = 40 * (timeLeft / duration);
+                confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.4), y: Math.random() - 0.2 } }));
+                confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.6, 0.9), y: Math.random() - 0.2 } }));
+            }, 250);
 
-                var interval = setInterval(function() {
-                    var timeLeft = animationEnd - Date.now();
-                    if (timeLeft <= 0) return clearInterval(interval);
+            const container = document.getElementById('mainContainer');
+            container.style.opacity = 0;
 
-                    var particleCount = 40 * (timeLeft / duration);
-                    confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.4), y: Math.random() - 0.2 } }));
-                    confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.6, 0.9), y: Math.random() - 0.2 } }));
-                }, 250);
-
-                const container = document.getElementById('mainContainer');
-                container.style.opacity = 0;
-
-                setTimeout(() => {
-                    container.innerHTML = `
-                        <div class="success-message">
-                            <div class="thankyou-animation">
-                                <div class="face">
-                                    <div class="eye left"></div>
-                                    <div class="eye right"></div>
-                                    <div class="tear left"></div>
-                                    <div class="tear right"></div>
-                                    <div class="mouth"></div>
-                                </div>
+            setTimeout(() => {
+                container.innerHTML = `
+                    <div class="success-message">
+                        <div class="thankyou-animation">
+                            <div class="face">
+                                <div class="eye left"></div>
+                                <div class="eye right"></div>
+                                <div class="tear left"></div>
+                                <div class="tear right"></div>
+                                <div class="mouth"></div>
                             </div>
-                            <h2>THANK YOU SO MUCH! 😭💖</h2>
-                            <p style="font-size: 1.05rem; line-height: 1.6; margin-top: 15px; color: #555;">
-                                YAY! Bati na tayo! You are the absolute best, Mimi.<br>
-                                I promise to make it up to you! I will do better next time Mimi 🥹!
-                            </p>
                         </div>
-                    `;
-                    container.style.opacity = 1;
-                }, 300);
-            }
+                        <h2>THANK YOU SO MUCH! 😭💖</h2>
+                        <p style="font-size: 1.05rem; line-height: 1.6; margin-top: 15px; color: #555;">
+                            YAY! Bati na tayo! You are the absolute best, Mimi.<br>
+                            I promise to make it up to you! I will do better next time Mimi 🥹!
+                        </p>
+                    </div>
+                `;
+                container.style.opacity = 1;
+            }, 300);
+        }
 
-            function randomInRange(min, max) {
-                return Math.random() * (max - min) + min;
-            }
-        </script>
-    </body>
-    </html>
+        function randomInRange(min, max) {
+            return Math.random() * (max - min) + min;
+        }
+    </script>
+</body>
+</html>
