@@ -65,16 +65,21 @@
             margin-bottom: 8px;
         }
 
+        /* Updated Image Styling */
         .hero-img {
-            font-size: 70px;
-            margin: 10px 0;
+            width: 180px;
+            max-width: 100%;
+            height: auto;
+            border-radius: 18px;
+            margin: 10px 0 15px;
             display: inline-block;
+            box-shadow: 0 6px 15px rgba(251, 111, 146, 0.25);
             animation: pulse 2s infinite ease-in-out;
         }
 
         @keyframes pulse {
             0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.08); }
+            50% { transform: scale(1.05); }
         }
 
         .subtitle {
@@ -224,7 +229,7 @@
 
         /* DESKTOP-ONLY SIDE DECORATIONS */
         .desktop-note {
-            display: none; /* Hidden on mobile by default */
+            display: none;
         }
 
         @media (min-width: 950px) {
@@ -266,7 +271,7 @@
             }
         }
 
-        /* Floating background hearts & flowers */
+        /* Floating background elements */
         .bg-element {
             position: fixed;
             font-size: 26px;
@@ -282,7 +287,7 @@
             100% { transform: translateY(-10vh) scale(1.2) rotate(20deg); opacity: 0; }
         }
 
-        /* Mouse Trail Particles (Flowers + Hearts) */
+        /* Mouse Trail Particles */
         .cursor-trail {
             position: fixed;
             pointer-events: none;
@@ -386,7 +391,7 @@
 </head>
 <body>
 
-    <!-- Floating Background Elements (Lilies, Tulips, White Roses, Hearts) -->
+    <!-- Floating Background Elements -->
     <div class="bg-element" style="left: 4%; animation-delay: 0s;">🌷</div>
     <div class="bg-element" style="left: 10%; animation-delay: 2.5s;">🤍</div>
     <div class="bg-element" style="left: 16%; animation-delay: 1.2s;">🪷</div>
@@ -410,7 +415,10 @@
         
         <!-- Header -->
         <h1 class="hero-title">Bati na tayo 👉👈</h1>
-        <div class="hero-img">🧸</div>
+        
+        <!-- Kitten Image replacing Teddy Bear Emoji -->
+        <img src="sorry_cat.jpg" alt="I'm Sorry Kitten" class="hero-img">
+        
         <p class="subtitle">Please read this before throwing your phone at me!</p>
 
         <!-- Personal Note Section -->
@@ -506,9 +514,9 @@
     </div>
 
     <script>
+        // Toggle explanation cards
 
-        // 📩 Send email alert automatically when the page is opened
-document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded', () => {
     const isTest = window.location.search.includes('test=true');
 
     console.log("page opened.....");
@@ -532,7 +540,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-        // Toggle explanation cards
+
         function toggleCard(card) {
             card.classList.toggle('active');
         }
@@ -605,30 +613,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Confetti, Email Alert & Screen update
         function acceptForgiveness() {
-           stopGrowing();
+            stopGrowing();
 
-    // Check if the URL contains ?test=true
-    const isTest = window.location.search.includes('test=true');
+            const isTest = window.location.search.includes('test=true');
 
-    // Send email alert via Web3Forms
-    fetch("https://api.web3forms.com/submit", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json"
-        },
-        body: JSON.stringify({
-            access_key: "8bbb5b17-c3eb-43d2-bcdb-1931736093a8",
-            from_name: isTest ? "TEST MODE" : "MIMI ON WEBSITE",
-            subject: isTest ? "🧪 TEST CLICK: Bati na tayo" : "🎉 REAL CLICK: Mimi pressed 'Bati na tayo!' 💖",
-            message: isTest 
-                ? "This was just you testing the site!" 
-                : "REAL ALERT! Mimi just clicked the 'Bati na tayo!' button! ✨",
-            // Include device info automatically
-            User_Agent: navigator.userAgent,
-            Screen_Resolution: `${window.screen.width}x${window.screen.height}`
-        })
-    }).catch(err => console.log("Notification error:", err));
+            fetch("https://api.web3forms.com/submit", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Accept: "application/json"
+                },
+                body: JSON.stringify({
+                    access_key: "8bbb5b17-c3eb-43d2-bcdb-1931736093a8",
+                    from_name: isTest ? "TEST MODE" : "MIMI ON WEBSITE",
+                    subject: isTest ? "🧪 TEST CLICK: Bati na tayo" : "🎉 REAL CLICK: Mimi pressed 'Bati na tayo!' 💖",
+                    message: isTest 
+                        ? "This was just you testing the site!" 
+                        : "REAL ALERT! Mimi just clicked the 'Bati na tayo!' button! ✨",
+                    User_Agent: navigator.userAgent,
+                    Screen_Resolution: `${window.screen.width}x${window.screen.height}`
+                })
+            }).catch(err => console.log("Notification error:", err));
 
             var duration = 4 * 1000;
             var animationEnd = Date.now() + duration;
